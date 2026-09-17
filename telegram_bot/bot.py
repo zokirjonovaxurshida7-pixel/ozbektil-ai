@@ -12,9 +12,11 @@ Ishga tushirish:
 """
 
 import asyncio
+from html import escape
 import logging
 import os
 import random
+import time
 
 import httpx
 from aiogram import Bot, Dispatcher, F, Router
@@ -31,8 +33,24 @@ from aiogram.types import (
 
 logging.basicConfig(level=logging.INFO)
 
-BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
-API_BASE = os.environ.get("API_BASE", "http://localhost:8000")
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+API_BASE = os.environ.get("API_BASE", "https://ozbektil-ai.onrender.com").rstrip("/")
+API_TIMEOUT_SECONDS = 20
+
+
+class BackendUnavailableError(Exception):
+    """Backend request failed or returned an unexpected response."""
+
+
+async def api_request(method: str, path: str, *, timeout: int = API_TIMEOUT_SECONDS, **kwargs) -> httpx.Response:
+    try:
+        async with httpx.AsyncClient(timeout=timeout) as client:
+            response = await client.request(method, f"{API_BASE}{path}", **kwargs)
+    except httpx.RequestError as exc:
+        raise BackendUnavailableError from exc
+    if response.status_code >= 500:
+        raise BackendUnavailableError
+    return response
 
 router = Router()
 
@@ -81,25 +99,24 @@ async def start_text_check(message: Message, state: FSMContext):
 @router.message(Flow.waiting_text_check)
 async def handle_text_check(message: Message, state: FSMContext):
     await state.clear()
-    async with httpx.AsyncClient(timeout=20) as client:
-        try:
-            resp = await client.post(f"{API_BASE}/api/check-text", json={"text": message.text})
-            resp.raise_for_status()
-            data = resp.json()
-        except Exception:
-            await message.answer("⚠️ Serverga ulanib bo‘lmadi. Backend ishga tushirilganini tekshiring.")
-            return
+    try:
+        resp = await api_request("POST", "/api/check-text", json={"text": message.text or ""})
+        resp.raise_for_status()
+        data = resp.json()
+    except (BackendUnavailableError, httpx.HTTPError, ValueError):
+        await message.answer("⚠️ Serverga ulanib bo‘lmadi. Keyinroq qayta urinib ko‘ring.")
+        return
 
-    lines = [f"✅ <b>To‘g‘rilangan matn:</b>\n{data['corrected_text']}\n"]
+    lines = [f"✅ <b>To‘g‘rilangan matn:</b>\n{escape(data['corrected_text'])}\n"]
     if data["total_errors"] == 0:
         lines.append("Xato topilmadi. Ajoyib!")
     else:
         for err in data["spelling_errors"]:
-            lines.append(f"❌ {err['wrong']} → ✅ {err['correct']}\n<i>{err['explanation']}</i>")
+            lines.append(f"❌ {escape(err['wrong'])} → ✅ {escape(err['correct'])}\n<i>{escape(err['explanation'])}</i>")
         for err in data["grammar_errors"]:
-            lines.append(f"⚠️ {err['issue']} {err['suggestion']}")
+            lines.append(f"⚠️ {escape(err['issue'])} {escape(err['suggestion'])}")
         for err in data.get("style_errors", []):
-            lines.append(f"✏️ {err['issue']} {err['suggestion']}")
+            lines.append(f"✏️ {escape(err['issue'])} {escape(err['suggestion'])}")
 
     await message.answer("\n\n".join(lines), parse_mode="HTML", reply_markup=MAIN_MENU)
 
@@ -114,14 +131,20 @@ async def start_dict(message: Message, state: FSMContext):
 @router.message(Flow.waiting_dict_word)
 async def handle_dict(message: Message, state: FSMContext):
     await state.clear()
-    word = message.text.strip()
-    async with httpx.AsyncClient(timeout=20) as client:
-        resp = await client.get(f"{API_BASE}/api/dictionary", params={"q": word})
+    word = (message.text or "").strip()
+    if not word:
+        await message.answer("So‘z yuboring.", reply_markup=MAIN_MENU)
+        return
+    try:
+        resp = await api_request("GET", "/api/dictionary", params={"q": word})
+    except BackendUnavailableError:
+        await message.answer("⚠️ Serverga ulanib bo‘lmadi. Keyinroq qayta urinib ko‘ring.", reply_markup=MAIN_MENU)
+        return
 
     if resp.status_code == 404:
         detail = resp.json().get("detail", {})
         suggestions = detail.get("suggestions", [])
-        text = f"“{word}” lug‘atda topilmadi."
+        text = f"“{escape(word)}” lug‘atda topilmadi."
         if suggestions:
             text += "\nEhtimol: " + ", ".join(suggestions)
         await message.answer(text, reply_markup=MAIN_MENU)
@@ -129,14 +152,14 @@ async def handle_dict(message: Message, state: FSMContext):
 
     entry = resp.json()
     text = (
-        f"<b>{entry['word']}</b> ({entry['turkum']}, {entry['talaffuz']})\n\n"
-        f"{entry['meaning']}\n\n"
-        f"🔁 Sinonim: {', '.join(entry['synonyms']) or '—'}\n"
-        f"🔀 Antonim: {', '.join(entry['antonyms']) or '—'}\n\n"
-        f"✏️ Misol: {entry['example']}"
+        f"<b>{escape(entry['word'])}</b> ({escape(entry['turkum'])}, {escape(entry['talaffuz'])})\n\n"
+        f"{escape(entry['meaning'])}\n\n"
+        f"🔁 Sinonim: {escape(', '.join(entry['synonyms']) or '—')}\n"
+        f"🔀 Antonim: {escape(', '.join(entry['antonyms']) or '—')}\n\n"
+        f"✏️ Misol: {escape(entry['example'])}"
     )
     if entry.get("kelib_chiqishi"):
-        text += f"\n\n🕰 Kelib chiqishi: {entry['kelib_chiqishi']}"
+        text += f"\n\n🕰 Kelib chiqishi: {escape(entry['kelib_chiqishi'])}"
     await message.answer(text, parse_mode="HTML", reply_markup=MAIN_MENU)
 
 
@@ -167,17 +190,16 @@ async def handle_ai_mode(callback, state: FSMContext):
     await state.clear()
     await callback.message.edit_reply_markup()
 
-    async with httpx.AsyncClient(timeout=30) as client:
-        try:
-            resp = await client.post(f"{API_BASE}/api/ai-assist", json={"text": text, "mode": mode})
-            resp.raise_for_status()
-            result = resp.json()
-        except Exception:
-            await callback.message.answer("⚠️ Serverga ulanib bo‘lmadi.")
-            await callback.answer()
-            return
+    try:
+        resp = await api_request("POST", "/api/ai-assist", timeout=30, json={"text": text, "mode": mode})
+        resp.raise_for_status()
+        result = resp.json()
+    except (BackendUnavailableError, httpx.HTTPError, ValueError):
+        await callback.message.answer("⚠️ Serverga ulanib bo‘lmadi. Keyinroq qayta urinib ko‘ring.")
+        await callback.answer()
+        return
 
-    await callback.message.answer(result["result"], reply_markup=MAIN_MENU)
+    await callback.message.answer(escape(result["result"]), reply_markup=MAIN_MENU)
     await callback.answer()
 
 
@@ -187,12 +209,25 @@ quiz_state: dict = {}  # oddiy, xotirada saqlanadigan holat (MVP uchun yetarli)
 
 @router.message(F.text == "🎓 Test")
 async def start_quiz(message: Message, state: FSMContext):
-    async with httpx.AsyncClient(timeout=20) as client:
-        resp = await client.get(f"{API_BASE}/api/quiz")
-    questions = resp.json()
+    try:
+        resp = await api_request("GET", "/api/quiz")
+        resp.raise_for_status()
+        questions = resp.json()
+    except (BackendUnavailableError, httpx.HTTPError, ValueError):
+        await message.answer("⚠️ Testlarni yuklab bo‘lmadi. Keyinroq qayta urinib ko‘ring.", reply_markup=MAIN_MENU)
+        return
+    if not questions:
+        await message.answer("Hozircha test savollari mavjud emas.", reply_markup=MAIN_MENU)
+        return
     random.shuffle(questions)
     questions = questions[:5]  # botda qisqaroq test, tezroq tugaydi
-    quiz_state[message.from_user.id] = {"questions": questions, "index": 0, "answers": {}}
+    quiz_state[message.from_user.id] = {
+        "questions": questions,
+        "index": 0,
+        "answers": {},
+        "started_at": time.monotonic(),
+    }
+    await state.set_state(Flow.quiz_active)
     await send_quiz_question(message, message.from_user.id)
 
 
@@ -208,29 +243,54 @@ async def send_quiz_question(message: Message, user_id: int):
 
 @router.callback_query(F.data.startswith("quiz:"))
 async def handle_quiz_answer(callback, state: FSMContext):
-    _, q_id, choice = callback.data.split(":")
+    try:
+        _, q_id, choice = callback.data.split(":")
+        q_id = int(q_id)
+    except (AttributeError, ValueError):
+        await callback.answer("Bu javob tugmasi yaroqsiz.", show_alert=True)
+        return
     user_id = callback.from_user.id
     qs = quiz_state.get(user_id)
     if not qs:
         await callback.answer("Test sessiyasi topilmadi, /start bosing.")
         return
+    if time.monotonic() - qs["started_at"] > 1800:
+        del quiz_state[user_id]
+        await state.clear()
+        await callback.answer("Test sessiyasi muddati tugagan. Qayta boshlang.", show_alert=True)
+        return
 
-    qs["answers"][int(q_id)] = choice
+    if qs["index"] >= len(qs["questions"]):
+        await callback.answer("Bu test allaqachon yakunlangan.")
+        return
+    current_question = qs["questions"][qs["index"]]
+    if current_question["id"] != q_id or choice not in current_question["options"]:
+        await callback.answer("Bu javob endi yaroqsiz.", show_alert=True)
+        return
+    qs["answers"][q_id] = choice
     qs["index"] += 1
     await callback.message.edit_reply_markup()
 
     if qs["index"] < len(qs["questions"]):
         await send_quiz_question(callback.message, user_id)
     else:
-        async with httpx.AsyncClient(timeout=20) as client:
-            resp = await client.post(f"{API_BASE}/api/quiz/submit", json={"answers": qs["answers"]})
-        result = resp.json()
+        try:
+            resp = await api_request("POST", "/api/quiz/submit", json={"answers": qs["answers"]})
+            resp.raise_for_status()
+            result = resp.json()
+        except (BackendUnavailableError, httpx.HTTPError, ValueError):
+            del quiz_state[user_id]
+            await state.clear()
+            await callback.message.answer("⚠️ Natijani saqlab bo‘lmadi. Keyinroq qayta urinib ko‘ring.", reply_markup=MAIN_MENU)
+            await callback.answer()
+            return
         text = (
             f"📊 Natija: {result['score']}/{len(qs['answers'])} to‘g‘ri javob berilgan savollardan\n\n"
-            f"{result['recommendation']}"
+            f"{escape(result['recommendation'])}"
         )
         await callback.message.answer(text, reply_markup=MAIN_MENU)
         del quiz_state[user_id]
+        await state.clear()
     await callback.answer()
 
 
