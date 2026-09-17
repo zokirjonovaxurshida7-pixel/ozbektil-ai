@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin panel — O‘zbekTil AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+
+<!-- KIRISH EKRANI (admin bo'lmagan / kirmagan foydalanuvchi uchun) -->
+<div class="admin-gate" id="admin-gate">
+  <div class="admin-gate-box">
+    <div class="hero-brand" style="margin-bottom:22px;">
+      <span class="brand-mark">Ў</span>
+      <span class="brand-name" style="color:var(--cobalt-deep);">O‘zbekTil AI — Admin</span>
+    </div>
+    <h3 class="modal-title">Administrator sifatida kiring</h3>
+    <form id="admin-login-form">
+      <label class="field-label">Login</label>
+      <input type="text" id="admin-username" required autocomplete="username">
+      <label class="field-label">Parol</label>
+      <div class="password-field">
+        <input type="password" id="admin-password" required autocomplete="current-password">
+        <button type="button" class="password-toggle" aria-label="Parolni ko‘rsatish" data-password-toggle="admin-password">Ko‘rsat</button>
+      </div>
+      <p class="form-error" id="admin-login-error" hidden></p>
+      <button type="submit" class="btn-primary" id="admin-login-submit">Kirish</button>
+    </form>
+    <p class="modal-switch"><a href="index.html">← Bosh sahifaga qaytish</a></p>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="admin-app" id="admin-app" hidden>
+  <header class="admin-header">
+    <div class="hero-brand">
+      <span class="brand-mark">Ў</span>
+      <span class="brand-name" style="color:var(--cobalt-deep);">Admin panel</span>
+    </div>
+    <div class="user-chip" style="color:var(--ink);">
+      <span class="user-name" id="admin-username-label"></span>
+      <a href="index.html">Saytga qaytish</a>
+      <button id="admin-logout-btn">Chiqish</button>
+    </div>
+  </header>
+
+  <nav class="tabs admin-tabs" role="tablist">
+    <button class="tab active" data-admin-tab="stats">📊 Statistika</button>
+    <button class="tab" data-admin-tab="users">👥 Foydalanuvchilar</button>
+    <button class="tab" data-admin-tab="dictionary">📚 Lug‘at</button>
+    <button class="tab" data-admin-tab="quiz">🎓 Test savollari</button>
+  </nav>
+
+  <main class="content admin-content">
+
+    <!-- STATISTIKA -->
+    <section id="admin-stats" class="panel active">
+      <h2 class="panel-title">Umumiy statistika</h2>
+      <div class="profile-summary" id="stats-grid"></div>
+
+      <div class="activity-panel">
+        <div class="panel-header-inline">
+          <h3 class="panel-subtitle">So‘nggi harakatlar</h3>
+          <span class="activity-pill">Admin log</span>
+        </div>
+        <ul class="activity-list" id="admin-activity-list"></ul>
+      </div>
+    </section>
+
+    <!-- FOYDALANUVCHILAR -->
+    <section id="admin-users" class="panel">
+      <h2 class="panel-title">Foydalanuvchilar</h2>
+      <p class="panel-lede">Ro‘yxatdan o‘tgan barcha foydalanuvchilar ro‘yxati.</p>
+      <div class="table-wrap">
+        <table class="admin-table" id="users-table">
+          <thead><tr><th>Login</th><th>Email</th><th>Ro‘yxatdan o‘tgan</th><th>Testlar</th><th>Rol</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- LUG'AT -->
+    <section id="admin-dictionary" class="panel">
+      <h2 class="panel-title">Lug‘atni boshqarish</h2>
+      <p class="panel-lede">So‘z qo‘shing, tahrirlang yoki o‘chiring — o‘zgarishlar darhol saytda ko‘rinadi.</p>
+      <button class="btn-primary" id="add-word-btn">+ Yangi so‘z qo‘shish</button>
+      <div class="table-wrap">
+        <table class="admin-table" id="dictionary-table">
+          <thead><tr><th>So‘z</th><th>Turkum</th><th>Ma’no</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TEST SAVOLLARI -->
+    <section id="admin-quiz" class="panel">
+      <h2 class="panel-title">Test savollarini boshqarish</h2>
+      <p class="panel-lede">Savol qo‘shing, tahrirlang yoki o‘chiring.</p>
+      <button class="btn-primary" id="add-question-btn">+ Yangi savol qo‘shish</button>
+      <div class="table-wrap">
+        <table class="admin-table" id="quiz-table">
+          <thead><tr><th>Mavzu</th><th>Savol</th><th>To‘g‘ri javob</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- SO'Z QO'SHISH/TAHRIRLASH MODALI -->
+<div class="modal-overlay" id="word-modal" hidden>
+  <div class="modal-box modal-box-lg">
+    <button class="modal-close" data-close-modal>✕</button>
+    <h3 class="modal-title" id="word-modal-title">Yangi so‘z</h3>
+    <form id="word-form">
+      <input type="hidden" id="word-id">
+      <label class="field-label">So‘z</label>
+      <input type="text" id="word-word" required>
+      <label class="field-label">So‘z turkumi (masalan: ot, sifat, fe’l)</label>
+      <input type="text" id="word-turkum">
+      <label class="field-label">Talaffuzi</label>
+      <input type="text" id="word-talaffuz">
+      <label class="field-label">Ma’nosi</label>
+      <input type="text" id="word-meaning">
+      <label class="field-label">Sinonimlar (vergul bilan ajrating)</label>
+      <input type="text" id="word-synonyms">
+      <label class="field-label">Antonimlar (vergul bilan ajrating)</label>
+      <input type="text" id="word-antonyms">
+      <label class="field-label">Misol gap</label>
+      <input type="text" id="word-example">
+      <label class="field-label">Kelib chiqishi (etimologiya)</label>
+      <input type="text" id="word-origin">
+      <p class="form-error" id="word-error" hidden></p>
+      <button type="submit" class="btn-primary" id="word-submit">Saqlash</button>
+    </form>
+  </div>
+</div>
+
+<!-- SAVOL QO'SHISH/TAHRIRLASH MODALI -->
+<div class="modal-overlay" id="question-modal" hidden>
+  <div class="modal-box modal-box-lg">
+    <button class="modal-close" data-close-modal>✕</button>
+    <h3 class="modal-title" id="question-modal-title">Yangi savol</h3>
+    <form id="question-form">
+      <input type="hidden" id="question-id">
+      <label class="field-label">Mavzu</label>
+      <input type="text" id="question-topic" required>
+      <label class="field-label">Savol matni</label>
+      <input type="text" id="question-text" required>
+      <label class="field-label">A variant</label>
+      <input type="text" id="question-opt-a" required>
+      <label class="field-label">B variant</label>
+      <input type="text" id="question-opt-b" required>
+      <label class="field-label">C variant</label>
+      <input type="text" id="question-opt-c">
+      <label class="field-label">D variant</label>
+      <input type="text" id="question-opt-d">
+      <label class="field-label">To‘g‘ri javob (A/B/C/D)</label>
+      <input type="text" id="question-correct" required maxlength="1" style="text-transform:uppercase;">
+      <label class="field-label">Izoh (nega to‘g‘ri javob shu)</label>
+      <input type="text" id="question-explanation">
+      <p class="form-error" id="question-error" hidden></p>
+      <button type="submit" class="btn-primary" id="question-submit">Saqlash</button>
+    </form>
+  </div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+[
+  {
+    "word": "zukko",
+    "turkum": "sifat",
+    "talaffuz": "zukkó",
+    "meaning": "Aqlli, tez fahmlaydigan, idrokli.",
+    "synonyms": ["aqlli", "dono", "idrokli", "zehnli"],
+    "antonyms": ["nodon", "ahmoq"],
+    "example": "Ahmad sinfdagi eng zukko o‘quvchi hisoblanadi.",
+    "kelib_chiqishi": "Arabcha \"zakiy\" (زكي) — \"pok, iste'dodli\" so‘zidan o‘zlashgan, forscha orqali tilimizga kirgan."
+  },
+  {
+    "word": "dono",
+    "turkum": "sifat",
+    "talaffuz": "donó",
+    "meaning": "Aql-idrokli, hikmatli, tajribali.",
+    "synonyms": ["zukko", "aqlli", "hikmatli"],
+    "antonyms": ["nodon"],
+    "example": "Dono keksalar maslahatini har doim tinglash kerak.",
+    "kelib_chiqishi": "Forscha \"dānā\" (دانا) — \"biluvchi\" so‘zidan, \"donishmand\" bilan bir ildizdan."
+  },
+  {
+    "word": "mehnatkash",
+    "turkum": "sifat",
+    "talaffuz": "mehnatkásh",
+    "meaning": "Ko‘p va halol ishlaydigan, tirishqoq.",
+    "synonyms": ["tirishqoq", "harakatchan"],
+    "antonyms": ["dangasa", "yalqov"],
+    "example": "Mehnatkash dehqon yerdan mo‘l hosil oladi.",
+    "kelib_chiqishi": "Arabcha \"mehnat\" (محنة — sinov, mashaqqat) va forscha \"-kash\" (tortuvchi, chekuvchi) qo‘shimchasidan yasalgan."
+  },
+  {
+    "word": "dangasa",
+    "turkum": "sifat",
+    "talaffuz": "dangasá",
+    "meaning": "Ishlashni yoqtirmaydigan, harakatsiz.",
+    "synonyms": ["yalqov", "erinchoq"],
+    "antonyms": ["mehnatkash", "tirishqoq"],
+    "example": "Dangasa odam har doim bahona qidiradi.",
+    "kelib_chiqishi": "Turkiy tillarga xos so‘z, aniq etimologiyasi noaniq; ba’zi manbalarda forscha ta’sir ko‘rsatilgan."
+  },
+  {
+    "word": "vatanparvar",
+    "turkum": "sifat",
+    "talaffuz": "vatanparvár",
+    "meaning": "O‘z vatanini sevadigan, unga sodiq.",
+    "synonyms": ["vatanparast"],
+    "antonyms": ["xoin"],
+    "example": "Har bir fuqaro vatanparvar bo‘lishi kerak.",
+    "kelib_chiqishi": "Arabcha \"vatan\" (وطن) va forscha \"-parvar\" (parvarish qiluvchi, sevuvchi) qo‘shimchasidan."
+  },
+  {
+    "word": "go‘zal",
+    "turkum": "sifat",
+    "talaffuz": "go‘zál",
+    "meaning": "Ko‘rinishi yoqimli, chiroyli.",
+    "synonyms": ["chiroyli", "husnli", "nafis"],
+    "antonyms": ["xunuk"],
+    "example": "Bahorda bog‘lar juda go‘zal ko‘rinadi.",
+    "kelib_chiqishi": "Forscha \"gūzāl\" so‘zidan, klassik o‘zbek adabiyotida keng qo‘llangan."
+  },
+  {
+    "word": "shodlik",
+    "turkum": "ot",
+    "talaffuz": "shodlík",
+    "meaning": "Xursandchilik, quvonch holati.",
+    "synonyms": ["quvonch", "xursandchilik"],
+    "antonyms": ["g‘am", "qayg‘u"],
+    "example": "Bayram kuni bolalarning shodligi cheksiz edi.",
+    "kelib_chiqishi": "Forscha \"shād\" (شاد — quvnoq) so‘ziga o‘zbekcha \"-lik\" qo‘shimchasi qo‘shilib yasalgan."
+  },
+  {
+    "word": "sabr",
+    "turkum": "ot",
+    "talaffuz": "sabr",
+    "meaning": "Qiyinchilikka bardosh berish, chidamlilik.",
+    "synonyms": ["chidam", "bardosh"],
+    "antonyms": ["shoshqaloqlik"],
+    "example": "Sabr qilgan murodiga yetadi.",
+    "kelib_chiqishi": "Arabcha \"sabr\" (صبر) so‘zidan, dastlab diniy-falsafiy matnlar orqali tilimizga kirgan."
+  },
+  {
+    "word": "botir",
+    "turkum": "sifat",
+    "talaffuz": "botír",
+    "meaning": "Qo‘rqmas, jasur, mard.",
+    "synonyms": ["jasur", "mard", "qahramon"],
+    "antonyms": ["qo‘rqoq"],
+    "example": "Jaloliddin Manguberdi tarixda botir sarkarda sifatida qoldi.",
+    "kelib_chiqishi": "Qadimgi turkiy \"bagatur\" so‘zidan (\"botir/bahodir\"), moʻgʻul va boshqa turkiy tillarga ham tarqalgan."
+  },
+  {
+    "word": "ma’lumot",
+    "turkum": "ot",
+    "talaffuz": "ma’lumót",
+    "meaning": "Biror narsa haqidagi xabar yoki bilim.",
+    "synonyms": ["xabar", "bilim", "axborot"],
+    "antonyms": [],
+    "example": "Kutubxonada kerakli ma’lumotni topdim.",
+    "kelib_chiqishi": "Arabcha \"ma’lum\" (معلوم — bilingan) so‘zidan yasalgan, \"ilm\" bilan bir ildizdan."
+  },
+  {
+    "word": "til",
+    "turkum": "ot",
+    "talaffuz": "til",
+    "meaning": "Odamlar o‘rtasida fikr almashish vositasi; nutq organi.",
+    "synonyms": ["nutq"],
+    "antonyms": [],
+    "example": "O‘zbek tili — davlat tili maqomiga ega.",
+    "kelib_chiqishi": "Umumturkiy qadimgi so‘z, Urxun-Enasoy yozma yodgorliklarida ham uchraydi."
+  },
+  {
+    "word": "ilm",
+    "turkum": "ot",
+    "talaffuz": "ilm",
+    "meaning": "Bilim, fan, o‘rganilgan haqiqatlar tizimi.",
+    "synonyms": ["bilim", "fan"],
+    "antonyms": ["jaholat"],
+    "example": "Ilm — kishini kamolotga yetaklovchi eng ishonchli yo‘l.",
+    "kelib_chiqishi": "Arabcha \"ilm\" (علم) so‘zidan, \"alim\", \"ma’lumot\" so‘zlari bilan bir ildiz."
+  },
+  {
+    "word": "kamtar",
+    "turkum": "sifat",
+    "talaffuz": "kamtár",
+    "meaning": "O‘zini ko‘z-ko‘z qilmaydigan, oddiy va odobli.",
+    "synonyms": ["oddiy", "andishali"],
+    "antonyms": ["mag‘rur", "manman"],
+    "example": "Ustoz doim kamtarligi bilan barchaga ibrat edi.",
+    "kelib_chiqishi": "Forscha \"kam\" (oz) va \"tar\" qiyoslash qo‘shimchasidan: \"o‘zini kam ko‘rsatuvchi\"."
+  },
+  {
+    "word": "andisha",
+    "turkum": "ot",
+    "talaffuz": "andishá",
+    "meaning": "Ehtiyotkorlik bilan fikrlash, or-nomus tuyg‘usi.",
+    "synonyms": ["hayo", "or-nomus"],
+    "antonyms": ["beandishalik"],
+    "example": "Andishali kishi so‘zini o‘ylab gapiradi.",
+    "kelib_chiqishi": "Forscha \"andīshe\" (اندیشه — o‘y, fikr) so‘zidan o‘zlashgan."
+  },
+  {
+    "word": "hurmat",
+    "turkum": "ot",
+    "talaffuz": "hurmát",
+    "meaning": "Kimsaga yuksak baho berib, izzat qilish.",
+    "synonyms": ["izzat", "e’zoz"],
+    "antonyms": ["kamsitish"],
+    "example": "Kattalarga hurmat — yoshlikdan singdiriladigan fazilat.",
+    "kelib_chiqishi": "Arabcha \"hurmat\" (حرمة — daxlsizlik, e’zoz) so‘zidan."
+  },
+  {
+    "word": "bilag‘on",
+    "turkum": "sifat",
+    "talaffuz": "bilag‘ón",
+    "meaning": "Ko‘p narsani biladigan, boxabar.",
+    "synonyms": ["boxabar", "ma’lumotli"],
+    "antonyms": ["bexabar"],
+    "example": "U bu mavzuda juda bilag‘on kishi.",
+    "kelib_chiqishi": "O‘zbekcha \"bil-\" fe’l ildiziga \"-g‘on\" sifatdosh qo‘shimchasi qo‘shilib yasalgan."
+  },
+  {
+    "word": "sarhisob",
+    "turkum": "ot",
+    "talaffuz": "sarhisób",
+    "meaning": "Yakuniy hisob-kitob, umumiy natija.",
+    "synonyms": ["yakun", "xulosa"],
+    "antonyms": [],
+    "example": "Yil oxirida ishlarimizning sarhisobini chiqardik.",
+    "kelib_chiqishi": "Forscha \"sar\" (bosh, uch) va arabcha \"hisob\" so‘zlarining qo‘shilishidan yasalgan."
+  },
+  {
+    "word": "gulzor",
+    "turkum": "ot",
+    "talaffuz": "gulzór",
+    "meaning": "Gullar ko‘p o‘sadigan joy, gulzor bog‘.",
+    "synonyms": ["gulbog‘", "chamanzor"],
+    "antonyms": [],
+    "example": "Bahorda maktab hovlisi gulzorga aylandi.",
+    "kelib_chiqishi": "Forscha \"gul\" va \"-zor\" (joy bildiruvchi qo‘shimcha, \"lolazor\"dagi kabi) so‘zlaridan."
+  },
+  {
+    "word": "hikmat",
+    "turkum": "ot",
+    "talaffuz": "hikmát",
+    "meaning": "Chuqur ma’noli, ta’sirli fikr; donolik.",
+    "synonyms": ["donolik", "falsafa"],
+    "antonyms": [],
+    "example": "Ustozning har bir so‘zida hikmat bor edi.",
+    "kelib_chiqishi": "Arabcha \"hikma\" (حكمة — donolik) so‘zidan, \"hakim\" bilan bir ildizdan."
+  },
+  {
+    "word": "sadoqat",
+    "turkum": "ot",
+    "talaffuz": "sadoqát",
+    "meaning": "Vafodorlik, biror kishi yoki g‘oyaga sodiqlik.",
+    "synonyms": ["vafodorlik", "sodiqlik"],
+    "antonyms": ["xiyonat"],
+    "example": "It — sadoqat ramzi hisoblanadi.",
+    "kelib_chiqishi": "Arabcha \"sidq\" (صدق — rostgo‘ylik) so‘zidan, \"sodiq\" bilan bir ildiz."
+  },
+  {
+    "word": "sarob",
+    "turkum": "ot",
+    "talaffuz": "sarób",
+    "meaning": "Cho‘lda issiqdan hosil bo‘lgan yolg‘on ko‘rinish; aldamchi umid.",
+    "synonyms": ["yolg‘on umid", "alahsirash"],
+    "antonyms": ["haqiqat"],
+    "example": "Uning va’dalari sarobdan boshqa narsa emas edi.",
+    "kelib_chiqishi": "Arabcha \"sarāb\" (سراب) so‘zidan — asl ma’nosi cho‘l manzarasidagi optik illyuziya."
+  },
+  {
+    "word": "muhabbat",
+    "turkum": "ot",
+    "talaffuz": "muhabbát",
+    "meaning": "Chin sevgi, mehr-oqibat, sadoqatli muhabbat.",
+    "synonyms": ["sevgi", "mehr", "muhabbet"],
+    "antonyms": ["nafrat"],
+    "example": "Ota-onaga muhabbat — insonning eng oliy fazilati.",
+    "kelib_chiqishi": "Arabcha \"muhabbat\" (محبة) so‘zidan, \"mehri-oqibat\" ma’nosini bildiradi."
+  },
+  {
+    "word": "barqaror",
+    "turkum": "sifat",
+    "talaffuz": "barqarór",
+    "meaning": "Tez o‘zgarib ketmaydigan, mustahkam, beqaror bo‘lmagan.",
+    "synonyms": ["mustahkam", "mustaqil", "tik", "rasmiy"],
+    "antonyms": ["beqaror"],
+    "example": "Barqaror rivojlanish uchun reja va sabr kerak.",
+    "kelib_chiqishi": "Arabcha \"barqara\" va forscha \"-or\" qo‘shimchalaridan yasalgan, \"mustahkam\" ma’nosini beradi."
+  },
+  {
+    "word": "tinchlik",
+    "turkum": "ot",
+    "talaffuz": "tinchlík",
+    "meaning": "Xavfsizlik, ozodlik va murosaga asoslangan osoyishtalik holati.",
+    "synonyms": ["osoyishtalik", "foyda", "sokinlik"],
+    "antonyms": ["taroqayish", "janjal"],
+    "example": "Tinchlik — har bir xalqning eng katta boyligi.",
+    "kelib_chiqishi": "\"Tinch\" va \"-lik\" qo‘shimchasi orqali yasalgan, qadimgi turkiy ildizlarga ega."
+  },
+  {
+    "word": "yalpi",
+    "turkum": "sifat",
+    "talaffuz": "yalpí",
+    "meaning": "To‘liq, umumiy va butun aholi yoki ob’ektni qamrab oluvchi.",
+    "synonyms": ["umumiy", "to‘liq", "keng qamrovli"],
+    "antonyms": ["cheklangan"],
+    "example": "Yalpi ma’lumotlar taqdimoti vaqtida muammolar ko‘rsatildi.",
+    "kelib_chiqishi": "Arabcha ildizga ega, \"umumiy, hamma uchun\" ma’nosini beradi."
+  },
+  {
+    "word": "orzumand",
+    "turkum": "sifat",
+    "talaffuz": "orzumánd",
+    "meaning": "Katta orzu-umidga to‘la, intiluvchan.",
+    "synonyms": ["umidvor", "intiluvchan"],
+    "antonyms": ["umidsiz"],
+    "example": "Yosh olim kelajakka orzumand nazar bilan qaraydi.",
+    "kelib_chiqishi": "Forscha \"ārzū\" (orzu) va \"-mand\" (ega bo‘lgan) qo‘shimchasidan yasalgan."
+  },
+  {
+    "word": "chevar",
+    "turkum": "sifat",
+    "talaffuz": "chevár",
+    "meaning": "Qo‘li gul, hunarda mohir.",
+    "synonyms": ["mohir", "usta"],
+    "antonyms": ["ko‘ngli notinch"],
+    "example": "Onam juda chevar tikuvchi hisoblanadi.",
+    "kelib_chiqishi": "Forscha \"chīra\" (mohir) so‘zi bilan bog‘liq deb hisoblanadi, aniq etimologiyasi tilshunoslarda bahsli."
+  }
+]
